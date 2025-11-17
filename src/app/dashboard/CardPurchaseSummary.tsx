@@ -33,7 +33,7 @@ const CardPurchaseSummary = () => {
           {/* BODY */}
           <div>
             {/* BODY HEADER */}
-            <div className="mb-3 mt-3 px-7">
+            <div className="mb-2 mt-2 px-7">
               <p className="text-xs text-gray-400">Purchased</p>
               <div className="flex items-center">
                 <p className="text-2xl font-bold">
