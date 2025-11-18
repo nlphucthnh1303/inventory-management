@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export interface Product {
     productId: string;
@@ -15,6 +15,12 @@ export interface NewProduct {
     stockQuantity: number;
 }
 
+export interface Users {
+    userId: string;
+    name: string;
+    email: string;
+}
+
 export interface SalesSummary {
     salesSummaryId: string;
     totalValue: number;
@@ -26,13 +32,13 @@ export interface PurchaseSummary {
     purchaseSummaryId: string;
     totalPurchase: number;
     changePercentage: number;
-    date: string;   
+    date: string;
 }
 
 export interface ExpenseSummary {
     expenseSummaryId: string;
     totalExpense: number;
-    date: string;   
+    date: string;
 }
 
 
@@ -45,17 +51,17 @@ export interface ExpenseByCategorySummary {
 
 
 export interface DashboardMetrics {
-   popularProducts: Product[];
-   salesSummary: SalesSummary[];
-   purchaseSummary: PurchaseSummary[];
-   expenseSummary: ExpenseSummary[];
-   expenseByCategorySummary: ExpenseByCategorySummary[];    
+    popularProducts: Product[];
+    salesSummary: SalesSummary[];
+    purchaseSummary: PurchaseSummary[];
+    expenseSummary: ExpenseSummary[];
+    expenseByCategorySummary: ExpenseByCategorySummary[];
 }
 
 export const api = createApi({
-    baseQuery : fetchBaseQuery({baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL}),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
     reducerPath: "api",
-    tagTypes: ["DashboardMetrics", "Products"],
+    tagTypes: ["DashboardMetrics", "Products", "Users", "Expenses"],
     endpoints: (build) => ({
         getDashboardMetrics: build.query<DashboardMetrics, void>({
             query: () => "/dashboard",
@@ -64,7 +70,7 @@ export const api = createApi({
         getProducts: build.query<Product[], string | void>({
             query: (search) => ({
                 url: "/products",
-                params: search ? {search}: {}
+                params: search ? { search } : {}
             }),
             providesTags: ["Products"],
         }),
@@ -75,7 +81,15 @@ export const api = createApi({
                 body: newProduct
             }),
             invalidatesTags: ["Products"],
-        })
+        }),
+        getUsers: build.query<Users[], void>({
+            query: () => "/users",
+            providesTags: ["Users"]
+        }),
+        getExpensesByCategory: build.query<ExpenseByCategorySummary[], void>({
+            query: () => "/expenses",
+            providesTags: ["Expenses"],
+        }),
 
     }),
 });
@@ -83,5 +97,7 @@ export const api = createApi({
 export const {
     useGetDashboardMetricsQuery,
     useGetProductsQuery,
-    useCreateProductMutation
+    useCreateProductMutation,
+    useGetUsersQuery,
+    useGetExpensesByCategoryQuery,
 } = api;
