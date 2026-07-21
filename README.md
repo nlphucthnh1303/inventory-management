@@ -137,9 +137,3 @@ node prisma/seed.js  # hoặc `npm run seed` nếu có script
 Kiểm tra file `LICENSE` trong repo hoặc thêm giấy phép phù hợp (ví dụ MIT).
 
 ---
-
-Nếu bạn muốn, tôi có thể:
-
-- Dịch sang tiếng Anh.
-- Mở rộng phần hướng dẫn deploy.
-- Thêm badge, logo hoặc ví dụ ảnh màn hình.
